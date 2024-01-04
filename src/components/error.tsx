@@ -1,4 +1,4 @@
-import { FallbackProps, useErrorBoundary } from "react-error-boundary";
+import { FallbackProps } from "react-error-boundary";
 
 function ErrorFallback({ error }: { error: FallbackProps }) {
     const handleReset = () => {

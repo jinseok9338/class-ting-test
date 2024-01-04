@@ -1,4 +1,3 @@
-import { useQuizQuery } from "@src/api/quiz";
 import { useQuiz } from "@src/contexts/quizContext";
 import { ActionType } from "@src/types/context";
 import { useNavigate } from "react-router-dom";
