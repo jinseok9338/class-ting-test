@@ -1,59 +1,52 @@
-import { useEffect } from "react";
 import Question from "@src/components/qusestion";
 import { useQuiz } from "@src/contexts/quizContext";
+import { useSetResultMutation } from "@src/storage/hook";
 import { ActionType } from "@src/types/context";
-import { useQuizQuery } from "@src/api/quiz";
-import { normalizeQuestions } from "@src/utils";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const QuizPage = () => {
     const [quizState, dispatch] = useQuiz();
-    const { data, error } = useQuizQuery();
     const navigate = useNavigate();
-
-    if (error) {
-        throw error
-    }
-
     const buttonText = quizState.currentQuestionIndex + 1 === quizState.questions.length ? "Finish the quiz" : "Next";
-    useEffect(() => {
-
-        if (data) {
-            const normalizedQuestions = normalizeQuestions(data);
-            dispatch({ type: ActionType.LOADED_QUESTIONS, string_payload: undefined, questions: normalizedQuestions })
-        }
-    }, [data])
+    const { mutate } = useSetResultMutation()
 
     const handleNext = () => {
         if (quizState.currentQuestionIndex + 1 === quizState.questions.length) {
+            mutate({ time: quizState.time })
             navigate("/result")
+            return
         }
         dispatch({ type: ActionType.NEXT_QUESTION })
     }
 
-    return (
-        <div className="quiz">
-            {/* {quizState.showResults === true && (
-                <div className="results">
-                    <div className="congratulations">Congratulations</div>
-                    <div className="results-info">
-                        <div> You've finished quiz! </div>
-                        <div> Your score is {quizState.correctAnswersCount} of {quizState.questions.length}!</div>
-                        <div className="next-button"
-                            onClick={() => dispatch({ type: ActionType.RESTART })}>Restart</div>
-                    </div>
-                </div>
+    useEffect(() => {
+        mutate({ correctAnswersCount: 0, correctAnswers: [] })
+    }, [])
 
-            )} */}
+    useEffect(() => {
+        const timerInterval = setInterval(() => {
+            dispatch({ type: ActionType.UPDATE_TIMER });
+        }, 1000); // Update timer every second
+
+        return () => clearInterval(timerInterval); // Cleanup on component unmount
+
+    }, [dispatch]);
+
+    return (
+        <div className="w-[975px] mx-auto mt-[100px]">
             {quizState.questions.length > 0 && (
                 <div>
-                    <div className="score">
+                    <div className="timer bg-white text-black text-[18px] w-[200px] mx-auto font-semibold h-[40px] mb-[30px] flex items-center justify-center">
+                        Time: {quizState.time} seconds
+                    </div>
+                    <div className="score bg-white text-black text-[18px] w-[200px] mx-auto font-semibold h-[40px] mb-[30px] flex items-center justify-center">
                         Question {quizState.currentQuestionIndex + 1}/
                         {quizState.questions.length}
                     </div>
                     <Question />
                     <button
-                        className="next-button"
+                        className="px-5 py-3 w-[300px] mt-0 m-auto text-white bg-gray-900 text-lg font-semibold uppercase cursor-pointer text-center disabled:bg-gray-400 hover:bg-green-600 disabled:cursor-not-allowed"
                         disabled={!quizState.currentAnswer}
                         onClick={handleNext}
                     >

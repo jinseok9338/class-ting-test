@@ -1,18 +1,20 @@
+import { useQuizQuery } from "@src/api/quiz";
 import { Action, ActionType, State } from "@src/types/context";
-import { shuffleAnswers } from "@src/utils";
+import { normalizeQuestions, shuffleAnswers } from "@src/utils";
 import { createContext, useContext, useReducer } from "react";
 
 
 const initialState: State = {
     currentQuestionIndex: 0,
     questions: [],
-    showResults: false,
     answers: [],
     currentAnswer: "",
     correctAnswersCount: 0,
+    time: 0
 };
 
 const reducer: React.Reducer<State, Action> = (state, action) => {
+
     switch (action.type) {
         case ActionType.SELECT_ANSWER: {
             const correctAnswersCount =
@@ -20,25 +22,22 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
                     state.questions[state.currentQuestionIndex].correctAnswer
                     ? state.correctAnswersCount + 1
                     : state.correctAnswersCount;
+
+
             return {
                 ...state,
                 currentAnswer: action.string_payload ?? "",
                 correctAnswersCount,
-            };
+            }
+
         }
         case ActionType.NEXT_QUESTION: {
-            const showResults =
-                state.currentQuestionIndex === state.questions.length - 1;
-            const currentQuestionIndex = showResults
-                ? state.currentQuestionIndex
-                : state.currentQuestionIndex + 1;
-            const answers = showResults
-                ? []
-                : shuffleAnswers(state.questions[currentQuestionIndex]);
+            const currentQuestionIndex =
+                state.currentQuestionIndex + 1;
+            const answers = shuffleAnswers(state.questions[currentQuestionIndex]);
             return {
                 ...state,
                 currentQuestionIndex,
-                showResults,
                 answers,
                 currentAnswer: "",
             };
@@ -53,7 +52,26 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
             }
         }
         case ActionType.RESTART: {
-            return initialState;
+            return {
+                ...state,
+                currentQuestionIndex: 0,
+                currentAnswer: "",
+                correctAnswersCount: 0,
+                answers: shuffleAnswers(state.questions[0])
+            };
+        }
+        case ActionType.START_TIMER: {
+            return {
+                ...state,
+                time: 0,
+            };
+        }
+
+        case ActionType.UPDATE_TIMER: {
+            return {
+                ...state,
+                time: state.time + 1,
+            };
         }
 
         default: {
@@ -68,8 +86,15 @@ const initialValue: [State, React.Dispatch<Action>] = [
 export const QuizContext = createContext(initialValue);
 
 export const QuizProvider = ({ children }: { children: React.ReactNode }) => {
-    const value = useReducer<React.Reducer<State, Action>>(reducer, initialState);
-    return <QuizContext.Provider value={value}>{children}</QuizContext.Provider>;
+    const { data, error } = useQuizQuery();
+    const normalizedQuestions = normalizeQuestions(data ?? [])
+    const initialStateWithQuestion = { ...initialState, questions: normalizedQuestions ?? [], answers: shuffleAnswers(normalizedQuestions[0]), }
+    const [state, dispatch] = useReducer<React.Reducer<State, Action>>(reducer, initialStateWithQuestion);
+    if (error) {
+        throw error
+    }
+
+    return <QuizContext.Provider value={[state, dispatch]}>{children}</QuizContext.Provider>;
 };
 
 export const useQuiz = () => useContext(QuizContext);

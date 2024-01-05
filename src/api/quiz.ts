@@ -20,5 +20,5 @@ export const fetchQuizData = async (): Promise<Question[]> => {
 export const quizQueryKey = 'getQuiz'; // Key for the query cache
 
 export const useQuizQuery = () => {
-    return useQuery(quizQueryKey, fetchQuizData);
+    return useQuery(quizQueryKey, fetchQuizData, { suspense: true });
 };

@@ -10,7 +10,7 @@ function ErrorFallback({ error }: { error: FallbackProps }) {
         <div role="alert">
             <p>Something went wrong:</p>
             <pre style={{ color: "red" }}>{error.error}</pre>
-            <button onClick={handleReset}>Try again</button>
+            <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={handleReset}>Try again</button>
         </div>
     );
 }
