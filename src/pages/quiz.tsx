@@ -45,13 +45,14 @@ const QuizPage = () => {
                         {quizState.questions.length}
                     </div>
                     <Question />
-                    <button
-                        className="px-5 py-3 w-[300px] mt-0 m-auto text-white bg-gray-900 text-lg font-semibold uppercase cursor-pointer text-center disabled:bg-gray-400 hover:bg-green-600 disabled:cursor-not-allowed"
-                        disabled={!quizState.currentAnswer}
-                        onClick={handleNext}
-                    >
-                        {buttonText}
-                    </button>
+                    {quizState.currentAnswer.length > 0 && (
+                        <button
+                            className="px-5 py-3 w-[300px] mt-0 m-auto text-white bg-gray-900 text-lg font-semibold uppercase cursor-pointer text-center disabled:bg-gray-400 hover:bg-green-600"
+                            onClick={handleNext}
+                        >
+                            {buttonText}
+                        </button>)}
+
                 </div>)}
 
         </div>
