@@ -1,7 +1,5 @@
 import { NormalizedQuestion as NormalizedQuestion, Question, questionsArraySchema } from "@src/types/quiz";
 
-
-
 export const shuffleAnswers = (question: NormalizedQuestion) => {
     const unshuffleAnswers = [
         question?.correctAnswer,

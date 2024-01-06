@@ -7,7 +7,6 @@ export type AnswerNote = {
     note?: string
 }
 
-
 export const answerNotesSchema = z.array(
     z.object({
         id: z.number(),
@@ -17,10 +16,7 @@ export const answerNotesSchema = z.array(
     })
 )
 
-
 export type FormDataType = Record<string, string>
-
-
 
 const keySchema = z.union([
     z.literal('0'),

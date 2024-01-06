@@ -1,21 +1,30 @@
-import { QueryClient, QueryClientConfig } from "react-query";
+import { MutationKey, QueryClient, QueryClientConfig, QueryKey, UseMutationOptions, UseQueryOptions, useMutation, useQuery } from "react-query";
 
 
 const baseConfig: QueryClientConfig = {
     // override this with custom config
-    defaultOptions: {
-        queries: {
-            retry: (failureCount, error) => {
-                // Retry only if it's the first failure and the status code is not 200
-                // 이 부분은 API 가 한번에 여러번 request 를 받으면 error 를 반환하기 때문에 넣은 로직임
-                return failureCount === 1 && (error as any)?.response?.status !== 200;
-            },
-            retryDelay: (retryCount) => {
-                // Delay for 2 seconds on retry
-                return retryCount * 2000;
-            },
-        }
-    }
+    defaultOptions: {}
 
 }
 export const queryClient = new QueryClient(baseConfig)
+
+type DefaultError = Error;
+
+export function useCustomQuery<TData, TError = DefaultError>(
+    options: Omit<UseQueryOptions<TData, TError, TData, QueryKey>, 'queryKey' | 'queryFn'> & {
+        queryKey: string;
+        queryFn: () => Promise<TData>;
+    }
+) {
+    return useQuery<TData, TError>(options.queryKey, options.queryFn, options);
+}
+
+
+export function useCustomMutation<TData, TVariables>(
+    options: Omit<UseMutationOptions<TData, unknown, TVariables, unknown>, 'mutationKey' | 'mutationFn'> & {
+        mutationKey: MutationKey;
+        mutationFn: (variables: TVariables) => Promise<TData>;
+    }
+) {
+    return useMutation<TData, unknown, TVariables>(options.mutationKey, options.mutationFn, options);
+}

@@ -20,8 +20,6 @@ export class SessionStorage {
     }
 }
 
-
-
 export class AnswerNoteStorage<T> extends SessionStorage {
     private key: string
     private schema: z.Schema<T>
@@ -43,9 +41,6 @@ export class AnswerNoteStorage<T> extends SessionStorage {
     private parseIntoString(value: T): string {
         return JSON.stringify(value);
     }
-
-
-
 
     getAnswerNotes(): OptionType<T> {
         let string_value = this.get(this.key);

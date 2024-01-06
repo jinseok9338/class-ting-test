@@ -1,5 +1,10 @@
 import { Pie } from 'react-chartjs-2';
-
+const colors = {
+    rightBg: 'rgba(54, 162, 235, 0.2)',
+    wrongBg: 'rgba(255, 99, 132, 0.2)',
+    rightBorder: 'rgba(54, 162, 235, 1)',
+    wrongBorder: 'rgba(255, 99, 132, 1)',
+}
 const Chart = ({ correctAnswersCount, questionsCount }: { correctAnswersCount: number, questionsCount: number }) => {
 
     const data = {
@@ -9,12 +14,12 @@ const Chart = ({ correctAnswersCount, questionsCount }: { correctAnswersCount: n
                 label: 'Your result',
                 data: [correctAnswersCount, questionsCount - correctAnswersCount],
                 backgroundColor: [
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
+                    colors.rightBg,
+                    colors.wrongBg,
                 ],
                 borderColor: [
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 99, 132, 1)',
+                    colors.rightBorder,
+                    colors.wrongBorder,
                 ],
                 borderWidth: 1,
             },

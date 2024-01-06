@@ -1,6 +1,7 @@
 import { Question, questionsArraySchema } from "@src/types/quiz";
 import { API_URL } from "@src/utils/consts";
-import { useQuery } from "react-query";
+
+import { useCustomQuery as useQuery } from "@src/api/client";
 export const fetchQuizData = async (): Promise<Question[]> => {
     try {
         const response = await fetch(API_URL);
@@ -20,5 +21,5 @@ export const fetchQuizData = async (): Promise<Question[]> => {
 export const quizQueryKey = 'getQuiz'; // Key for the query cache
 
 export const useQuizQuery = () => {
-    return useQuery(quizQueryKey, fetchQuizData, { suspense: true });
+    return useQuery<Question[]>({ queryKey: quizQueryKey, queryFn: fetchQuizData, suspense: true });
 };
