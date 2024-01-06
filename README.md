@@ -7,16 +7,25 @@
 
 
 사용한 기술
+
 vite: 프로젝트 세팅을 위해 사용했습니다.
+
 vitest: 단위, 통합 테스트를 위해 사용했습니다.
 
 ErrorBoundary - 에러 처리를 위해서 ErrorBoundary 를 설정 하였습니다.
+
 React Suspense - loading 에 대한 처리를 하기 위해서 suspense 를 설정하였습니다.
+
 Context API - dependency Injection 및 quiz 에 대한 상태 관리를 위해 context api 를 사용했습니다.
+
 React Query - 외부 에서 가져온 데이터를 관리하기 위해 React Query 를 사용했습니다.
+
 Tailwind Css,
+
 React-Router-Dom - client navigation 을 위해서 사용했습니다.
+
 ChartJS - 간단한 차트를 그리기 위해서 사용했습니다.
+
 Session Storage - 오답노트를 저장하기 위해서 사용했습니다.
 
 tests
