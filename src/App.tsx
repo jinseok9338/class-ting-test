@@ -12,7 +12,6 @@ import LoadingSpinner from './components/loadingSpinner'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 function App() {
   ChartJS.register(ArcElement, Tooltip, Legend);
-
   return (
     <ErrorBoundary
       FallbackComponent={ErrorFallback}

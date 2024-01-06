@@ -19,7 +19,6 @@ export const transformAnswerNotesWithQuestion = (answerNotes: AnswerNote[], ques
     })
 }
 
-
 export const transformFormDataToAnswerNotes = (formData: FormDataType, answerNotes: AnswerNote[]): AnswerNote[] => {
     return answerNotes.map((answerNote) => {
         return {

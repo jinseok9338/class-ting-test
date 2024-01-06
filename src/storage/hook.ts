@@ -35,10 +35,7 @@ export const useSetAnswerNotesMutation = () => {
     })
 };
 
-
-
 const resultStorage = new ResultStorage(resultSchema, RESULT_SESSION_STORAGE_KEY);
-
 
 const resultQueryKey = 'getResult';
 export const fetchResult = (): Promise<Result> => {

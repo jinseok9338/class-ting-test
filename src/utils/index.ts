@@ -12,7 +12,6 @@ export const shuffleAnswers = (question: NormalizedQuestion) => {
     })).sort((a, b) => a.sort - b.sort).map((a) => a.value)
 }
 
-
 export const normalizeQuestions = (backendQuestions: Question[]): NormalizedQuestion[] => {
     const validationResult = questionsArraySchema.safeParse(backendQuestions);
     if (!validationResult.success) {

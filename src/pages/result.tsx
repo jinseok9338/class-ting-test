@@ -18,9 +18,6 @@ const ResultPage = () => {
     const { mutate } = useSetAnswerNotesMutation();
     const { mutate: resultMutate } = useSetResultMutation()
 
-
-
-
     if (error || resultError) {
         throw error || resultError
     }
@@ -46,7 +43,6 @@ const ResultPage = () => {
         }
 
     }
-
 
     return (
         <div className="w-[975px] mx-auto mt-[120px] flex flex-col justify-center items-center">
