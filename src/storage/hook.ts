@@ -1,11 +1,11 @@
-import { AnswerNote, AnswerNotesSchema } from "@src/types/answerNote";
+import { AnswerNote, answerNotesSchema } from "@src/types/answerNote";
 import { ANSWER_SESSION_STORAGE_KEY, RESULT } from "@src/utils/consts";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { AnswerNoteStorage, ResultStorage } from ".";
 import { Result, ResultInputType, resultSchema } from "@src/types/context";
 
 
-const stroage = new AnswerNoteStorage<AnswerNote[]>(AnswerNotesSchema, ANSWER_SESSION_STORAGE_KEY)
+const stroage = new AnswerNoteStorage<AnswerNote[]>(answerNotesSchema, ANSWER_SESSION_STORAGE_KEY)
 export const fetchAnswerNotes = (): AnswerNote[] => {
     let value = stroage.getAnswerNotes();
     if (value._tag === "Some") {

@@ -24,7 +24,7 @@ const Question = () => {
         dispatch({ type: ActionType.SELECT_ANSWER, string_payload: answerText })
     }
     return (
-        <div>
+        <div data-testid="question">
             <div className="bg-[#19719b] text-white p-2.5 min-h-[60px] flex items-center justify-center text-xl">
                 {currentQuestion.question}</div>
             <div className="flex flex-wrap justify-between mt-[50px]">

@@ -6,6 +6,9 @@ export const transformAnswerNotesWithQuestion = (answerNotes: AnswerNote[], ques
         return answerNotes
     }
 
+    if (answerNotes.length > questions.length) {
+        return answerNotes.slice(0, questions.length)
+    }
     return questions.map((question, index) => {
         return {
             id: index,

@@ -15,7 +15,7 @@ const Answer = ({ answerText, onSelectAnswer, index, currentAnswer, correctAnswe
     const disabledClass = currentAnswer ? 'cursor-not-allowed' : 'cursor-pointer';
     const backgroundClass = isWrongAnswer ? 'bg-red-500' : isCorrectAnswer ? 'bg-green-500' : 'bg-blue-500';
     return (
-        <div className={`w-48 bg-white min-h-[70px] mb-[30px] flex ${borderClass} ${disabledClass}`} onClick={() => onSelectAnswer(answerText)}>
+        <div data-testid="answer" className={`w-48 bg-white min-h-[70px] mb-[30px] flex ${borderClass} ${disabledClass}`} onClick={() => onSelectAnswer(answerText)}>
             <div className={`text-[30px] ${backgroundClass} text-white w-[70px] flex items-center justify-center`}>
                 {letterMapping[index]}</div>
             <div className="font-semibold flex items-center justify-center ml-[20px]">{answerText}</div>

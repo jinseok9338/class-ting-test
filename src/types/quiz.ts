@@ -44,6 +44,11 @@ export const questionsArraySchema = z.array(
         ]),
         question: z.string(),
         correct_answer: z.string(),
-        incorrect_answers: z.array(z.string()),
+        // incorrest_answers should not be empty
+        incorrect_answers: z
+            .array(z.string())
+            .refine(data => data.length > 0, {
+                message: "Incorrect answers should not be empty",
+            }),
     })
 );

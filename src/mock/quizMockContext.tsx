@@ -1,0 +1,158 @@
+import { reducer } from '@src/contexts/quizContext'
+import { Action, State } from '@src/types/context'
+import { normalizeQuestions, shuffleAnswers } from '@src/utils'
+import React, { useReducer } from 'react'
+
+export const mockData
+    = [
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science%3A%20Computers",
+            "question": "Whistler%20was%20the%20codename%20of%20this%20Microsoft%20Operating%20System.",
+            "correct_answer": "Windows%20XP",
+            "incorrect_answers": [
+                "Windows%202000",
+                "Windows%207",
+                "Windows%2095"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science%3A%20Computers",
+            "question": "Laserjet%20and%20inkjet%20printers%20are%20both%20examples%20of%20what%20type%20of%20printer%3F",
+            "correct_answer": "Non-impact%20printer",
+            "incorrect_answers": [
+                "Impact%20printer",
+                "Daisywheel%20printer",
+                "Dot%20matrix%20printer"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science%3A%20Computers",
+            "question": "Which%20of%20these%20programming%20languages%20is%20a%20low-level%20language%3F",
+            "correct_answer": "Assembly",
+            "incorrect_answers": [
+                "Python",
+                "C%23",
+                "Pascal"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science%3A%20Computers",
+            "question": "How%20many%20cores%20does%20the%20Intel%20i7-6950X%20have%3F",
+            "correct_answer": "10",
+            "incorrect_answers": [
+                "12",
+                "8",
+                "4"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science%3A%20Computers",
+            "question": "What%20did%20the%20name%20of%20the%20Tor%20Anonymity%20Network%20orignially%20stand%20for%3F",
+            "correct_answer": "The%20Onion%20Router",
+            "incorrect_answers": [
+                "The%20Only%20Router",
+                "The%20Orange%20Router",
+                "The%20Ominous%20Router"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science%3A%20Computers",
+            "question": "How%20many%20bytes%20are%20in%20a%20single%20Kibibyte%3F",
+            "correct_answer": "1024",
+            "incorrect_answers": [
+                "2400",
+                "1000",
+                "1240"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science%3A%20Computers",
+            "question": "How%20many%20bits%20make%20up%20the%20significand%20portion%20of%20a%20single%20precision%20floating%20point%20number%3F",
+            "correct_answer": "23",
+            "incorrect_answers": [
+                "8",
+                "53",
+                "15"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science%3A%20Computers",
+            "question": "On%20which%20day%20did%20the%20World%20Wide%20Web%20go%20online%3F",
+            "correct_answer": "December%2020%2C%201990",
+            "incorrect_answers": [
+                "December%2017%2C%201996",
+                "November%2012%2C%201990",
+                "November%2024%2C%201995"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science%3A%20Computers",
+            "question": ".rs%20is%20the%20top-level%20domain%20for%20what%20country%3F",
+            "correct_answer": "Serbia",
+            "incorrect_answers": [
+                "Romania",
+                "Russia",
+                "Rwanda"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science%3A%20Computers",
+            "question": "Which%20of%20the%20following%20is%20a%20personal%20computer%20made%20by%20the%20Japanese%20company%20Fujitsu%3F",
+            "correct_answer": "FM-7",
+            "incorrect_answers": [
+                "PC-9801",
+                "Xmillennium%20",
+                "MSX"
+            ]
+        }
+    ]
+
+
+
+
+//@ts-ignore
+const normalizedQustions = normalizeQuestions(mockData)
+const initialState: State = {
+    answers: shuffleAnswers(normalizedQustions[0]),
+    currentAnswer: "",
+    currentQuestionIndex: 0,
+    correctAnswersCount: 0,
+    questions: normalizedQustions,
+    time: 0
+}
+
+export const initialValueForMock: [State, React.Dispatch<Action>] = [
+    initialState,
+    () => { },
+]
+export const MockQuizContext = React.createContext(initialValueForMock)
+
+export const MockQuizProvider = ({ children }: { children: React.ReactNode }) => {
+    const [state, dispatch] = useReducer(reducer, initialState)
+
+    return (
+        <MockQuizContext.Provider value={[state, dispatch]}>
+            {children}
+        </MockQuizContext.Provider>
+    )
+}

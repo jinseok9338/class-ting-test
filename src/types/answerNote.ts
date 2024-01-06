@@ -8,7 +8,7 @@ export type AnswerNote = {
 }
 
 
-export const AnswerNotesSchema = z.array(
+export const answerNotesSchema = z.array(
     z.object({
         id: z.number(),
         question: z.string(),

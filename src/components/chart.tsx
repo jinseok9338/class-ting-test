@@ -1,6 +1,7 @@
 import { Pie } from 'react-chartjs-2';
 
 const Chart = ({ correctAnswersCount, questionsCount }: { correctAnswersCount: number, questionsCount: number }) => {
+
     const data = {
         labels: ['Right Answer', "Wrong Answer"],
         datasets: [
@@ -19,7 +20,6 @@ const Chart = ({ correctAnswersCount, questionsCount }: { correctAnswersCount: n
             },
         ],
     };
-
 
 
     return (
